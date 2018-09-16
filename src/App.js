@@ -4,6 +4,7 @@ import _ from 'lodash-core';
 import './App.css';
 import Grinder from './common/Grinder/Grinder';
 import Grinders from './common/data/grinders';
+import Stopwatch from './components/stopwatch';
 
 class App extends Component {
   componentWillMount(){
@@ -23,9 +24,13 @@ class App extends Component {
             </nav>
           </header>
         </div>
-
+      <div className="columns is-desktop">
+        <div className="card-item">
+          <Stopwatch />
+        </div>
+      </div>
         <div className="columns is-desktop">
-          {Grinders.map((grinder, i) => <div key={i} className="grinder-item">
+          {Grinders.map((grinder, i) => <div key={i} className="card-item">
               <Grinder label={grinder.label} brew_methods={grinder.brew_methods} />
             </div>)}
         </div>
