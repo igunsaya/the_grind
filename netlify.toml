@@ -3,7 +3,3 @@
   Functions = "lambda"
   Publish = "build"
 
- [[redirects]]
-   from = "https://stoic-bartik-d89de9.netlify.com/*"
-   to = "https://www.ismailgunsaya.com/:splat"
-   status = 301
