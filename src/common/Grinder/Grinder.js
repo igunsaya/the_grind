@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 
 class Grinder extends Component {
+
     table = () => {
         const { brew_methods } = this.props;
+
         return <table className="table is-striped">
             <thead>
               <tr>
@@ -12,13 +14,11 @@ class Grinder extends Component {
               </tr>
             </thead>
             <tbody>
-              {brew_methods.map((brew_method, i) =>
-              <tr key={i}>
+              {brew_methods.map((brew_method, i) => <tr key={i}>
                   <td>{brew_method.name}</td>
                   <td>{brew_method.min_value}</td>
                   <td>{brew_method.max_value}</td>
-              </tr>
-              )}
+                </tr>)}
             </tbody>
           </table>;
     };
