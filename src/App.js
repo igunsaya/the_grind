@@ -7,11 +7,6 @@ import Grinders from './common/data/grinders';
 import Stopwatch from './components/stopwatch';
 
 class App extends Component {
-  componentWillMount(){
-    fetch('/.netlify/functions/helloworld')
-      .then(response => response.json())
-      .then(json => this.setState({ loading: false, msg: json.msg }));
-  }
 
   render() {
     return <div className="">
