@@ -7,7 +7,6 @@
     "bulma": "^0.8.0",
     "lodash-core": "^4.17.15",
     "moment": "^2.24.0",
-    "netlify-lambda": "^1.6.3",
     "node-sass-chokidar": "^1.4.0",
     "npm-run-all": "^4.1.5",
     "react": "^16.12.0",
@@ -15,14 +14,12 @@
     "react-scripts": "^3.3.0"
   },
   "scripts": {
-    "build-lambda": "netlify-lambda build src/lambda",
-    "start-lambda": "netlify-lambda serve src/lambda",
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
-    "start": "npm-run-all -p watch-css start-js start-lambda",
+    "start": "npm-run-all -p watch-css start-js",
     "build-js": "react-scripts build",
-    "build": "npm-run-all build-css build-js build-lambda",
+    "build": "npm-run-all build-css build-js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
@@ -33,5 +30,18 @@
         "^/\\.netlify/functions": ""
       }
     }
+  },
+  "devDependencies": {},
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
