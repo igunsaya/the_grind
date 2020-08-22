@@ -14,54 +14,57 @@ class Stopwatch extends Component {
   handleStartClick = () => {
     this.timer = setInterval(this.ticker, 10);
     this.setState({
-        isRunning: true
+      isRunning: true,
     });
-  }
+  };
 
   handleStopClick = () => {
     clearInterval(this.timer);
     this.setState({
-        isRunning: false
+      isRunning: false,
     });
-  }
+  };
 
   handleResetClick = () => {
     this.handleStopClick();
-    this.setState({time_ms: moment().startOf('day')});
-  }
+    this.setState({ time_ms: moment().startOf('day') });
+  };
 
   ticker = () => {
     this.setState({ time_ms: this.state.time_ms.add(10, 'ms') });
-  }
+  };
 
   renderPrimaryButton = () => {
     const { isRunning } = this.state;
-    let label = "Start";
+    let label = 'Start';
     let onClick = this.handleStartClick;
     if (isRunning) {
-        label = "Stop";
-        onClick = this.handleStopClick;
+      label = 'Stop';
+      onClick = this.handleStopClick;
     }
     return (
-        <a className="card-footer-item" onClick={onClick}>{label}</a>
+      <button
+        className="border border-gray-500 px-5 py-3 rounded bg-gray-200"
+        onClick={onClick}
+      >
+        {label}
+      </button>
     );
-  }
+  };
 
   render() {
     return (
-      <div className="card">
-        <div className="card-content">
-          <div className="content title has-text-centered">
-            {moment(_.get(this.state, 'time_ms', '')).format(
-              moment.HTML5_FMT.TIME_MS,
-            )}
-          </div>
+      <div className="px-3 py-5">
+        <div className="text-4xl text-center tracking-widest px-14 py-4">
+          {moment(_.get(this.state, 'time_ms', '')).format(
+            moment.HTML5_FMT.TIME_MS,
+          )}
         </div>
-        <div className="card-footer">
+        <div className="flex flex-row justify-around">
           {this.renderPrimaryButton()}
-          <a className="card-footer-item" onClick={this.handleResetClick}>
+          <button className="border border-gray-500 px-5 py-3 rounded bg-gray-200" onClick={this.handleResetClick}>
             Reset
-          </a>
+          </button>
         </div>
       </div>
     );
