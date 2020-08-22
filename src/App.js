@@ -1,5 +1,4 @@
-import React, { Component, useState } from 'react';
-import _ from 'lodash-core';
+import React, { useState } from 'react';
 
 import { ReactComponent as ChevronUp } from './common/svg/chevron-up.svg';
 import { ReactComponent as ChevronDown } from './common/svg/chevron-down.svg';
