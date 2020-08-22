@@ -1,74 +1,90 @@
-import React, { Component } from 'react';
-import _ from 'lodash-core';
+import React, { Component, useEffect, useState } from 'react';
 import moment from 'moment';
 
-class Stopwatch extends Component {
-  constructor() {
-    super();
-    this.state = {
-      time_ms: moment().startOf('day'),
-      isRunning: false,
-    };
+const Stopwatch = ({ showLaps }) => {
+  const [isRunning, setIsRunning] = useState(false);
+  const [time, setTime] = useState(0);
+  const [laps, setLaps] = useState([]);
+
+  function toggle() {
+    setIsRunning(!isRunning);
   }
 
-  handleStartClick = () => {
-    this.timer = setInterval(this.ticker, 10);
-    this.setState({
-      isRunning: true,
-    });
-  };
+  function lap() {
+    const lastTotal = laps.length >= 1 ? laps[laps.length - 1].total : 0;
+    const duration = time - lastTotal;
+    setLaps(laps => [...laps, { duration, total: time }]);
+  }
 
-  handleStopClick = () => {
-    clearInterval(this.timer);
-    this.setState({
-      isRunning: false,
-    });
-  };
+  function reset() {
+    setTime(0);
+    setLaps([]);
+    setIsRunning(false);
+  }
 
-  handleResetClick = () => {
-    this.handleStopClick();
-    this.setState({ time_ms: moment().startOf('day') });
-  };
-
-  ticker = () => {
-    this.setState({ time_ms: this.state.time_ms.add(10, 'ms') });
-  };
-
-  renderPrimaryButton = () => {
-    const { isRunning } = this.state;
-    let label = 'Start';
-    let onClick = this.handleStartClick;
+  useEffect(() => {
+    let interval = null;
     if (isRunning) {
-      label = 'Stop';
-      onClick = this.handleStopClick;
+      interval = setInterval(() => {
+        setTime((time) => time + 10);
+      }, 10); //10ms
+    } else if (!isRunning && time !== 0) {
+      clearInterval(interval);
     }
-    return (
-      <button
-        className="border border-gray-500 px-5 py-3 rounded bg-gray-200"
-        onClick={onClick}
-      >
-        {label}
-      </button>
-    );
-  };
+    return () => clearInterval(interval);
+  }, [isRunning, time]);
 
-  render() {
-    return (
-      <div className="px-3 py-5">
-        <div className="text-4xl text-center tracking-widest px-14 py-4">
-          {moment(_.get(this.state, 'time_ms', '')).format(
-            moment.HTML5_FMT.TIME_MS,
-          )}
-        </div>
-        <div className="flex flex-row justify-around">
-          {this.renderPrimaryButton()}
-          <button className="border border-gray-500 px-5 py-3 rounded bg-gray-200" onClick={this.handleResetClick}>
-            Reset
-          </button>
-        </div>
+  const buttonStyle =
+    'rounded mx-2 w-1/3 bg-brown text-white font-bold';
+
+  return (
+    <div className="px-3 py-5">
+      <div className="font-semibold text-4xl text-center tracking-widest px-14 pb-8">
+        {moment(time).format('mm:ss.SSS')}
       </div>
-    );
-  }
-}
+      <div className="flex flex-row justify-between h-12">
+        <button className={buttonStyle} onClick={toggle}>
+          {isRunning ? 'Stop' : 'Start'}
+        </button>
+        <button className={buttonStyle} onClick={lap}>
+          Lap
+        </button>
+        <button className={buttonStyle} onClick={reset}>
+          Reset
+        </button>
+      </div>
+      {showLaps && laps.length > 0 ? (
+        <table className="container mx-auto mt-5">
+          <thead>
+            <tr>
+              <th className="border px-4 py-2" title="Pour">
+                Pour
+              </th>
+              <th className="border px-4 py-2" title="Duration">
+                Duration
+              </th>
+              <th className="border px-4 py-2" title="Total">
+                Total
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {laps.map((lap, i) => (
+              <tr key={i}>
+                <td className="border px-4 py-2">Pour {i + 1}</td>
+                <td className="border px-4 py-2">
+                  {moment(lap.duration).format('mm:ss')}
+                </td>
+                <td className="border px-4 py-2">
+                  {moment(lap.total).format('mm:ss')}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : null}
+    </div>
+  );
+};
 
 export default Stopwatch;
