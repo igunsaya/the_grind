@@ -1,42 +1,52 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import _ from 'lodash-core';
 
-import './App.css';
+import { ReactComponent as ChevronUp } from './common/svg/chevron-up.svg';
+import { ReactComponent as ChevronDown } from './common/svg/chevron-down.svg';
 import Grinder from './common/Grinder/Grinder';
 import Grinders from './common/data/grinders';
 import Stopwatch from './components/stopwatch';
 
-class App extends Component {
+const App = () => {
+  const [isGrinderVisible, setGrinderVisible] = useState(false);
 
-  render() {
-    return <div className="">
-        <div className="topheader">
-          <header className="container">
-            <nav className="navbar">
-              <div className="navbar-brand">
-                <span className="navbar-item">The Grind</span>
-              </div>
-            </nav>
-          </header>
-        </div>
-      <div className="columns is-desktop">
-        <div className="card-item">
-          <Stopwatch />
-        </div>
+  return (
+    <div className="flex flex-col">
+      <header className="bg-gray-700 text-white p-3">
+        <h1>The Grind</h1>
+      </header>
+      <div className="border-2 m-5">
+        <h2 className="p-2">Stopwatch</h2>
+        <Stopwatch />
       </div>
-        <div className="columns is-desktop">
-          {Grinders.map((grinder, i) => <div key={i} className="card-item">
-              <Grinder label={grinder.label} brew_methods={grinder.brew_methods} />
-            </div>)}
-        </div>
 
-      <footer className="footer">
-        <div className="content has-text-centered">
-          <p>{_.get(this.state, 'msg', 'Not executed')}</p>
+      <div className="border-2 m-5">
+        <div className="flex flex-row justify-between">
+          <h2 className="p-2">Grinders</h2>
+          <button
+            className="p-2"
+            onClick={() => setGrinderVisible(!isGrinderVisible)}
+          >
+            {isGrinderVisible ? (
+              <ChevronUp className="w-8" />
+            ) : (
+              <ChevronDown className="w-8" />
+            )}
+          </button>
         </div>
-      </footer>
-      </div>;
-  }
-}
+        {isGrinderVisible
+          ? Grinders.map((grinder, i) => (
+              <div key={i}>
+                <Grinder
+                  label={grinder.label}
+                  brew_methods={grinder.brew_methods}
+                />
+              </div>
+            ))
+          : null}
+      </div>
+    </div>
+  );
+};
 
 export default App;
