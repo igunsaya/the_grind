@@ -1,4 +1,4 @@
 [build]
-  Command = "npm run build"
+  Command = "NODE_ENV=production npm run build"
   Publish = "build"
 
