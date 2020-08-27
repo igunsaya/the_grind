@@ -8,8 +8,7 @@ h1 {
   @apply text-4xl;
 }
 h2 {
-  @apply text-xl;
-  @apply font-bold;
+  @apply text-base;
 }
 h3 {
   @apply text-lg;
