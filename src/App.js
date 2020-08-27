@@ -14,7 +14,7 @@ const App = () => {
   return (
     <div className="flex flex-col bg-lightBeige">
       <header className="flex items-end justify-between rounded-b-xl text-white h-40 bg-gradient-to-r from-mediumBrown to-lightBrown">
-        <h1 className="px-5 pb-5 font-light">The Grind</h1>
+        <h1 className="px-5 pb-5 font-normal">The Grind</h1>
         <Cup className="w-40 h-32 mr-5 mb-5" />
       </header>
       <div className="flex flex-col bg-lightBeige">
@@ -24,6 +24,9 @@ const App = () => {
             <button
               className="p-2"
               onClick={() => setMaxStopwatchView(!isMaxStopwatchView)}
+              aria-label={
+                isMaxStopwatchView ? 'Collapse Stopwatch' : 'Expand Stopwatch'
+              }
             >
               {isMaxStopwatchView ? (
                 <ChevronUp className="w-8" />
@@ -41,6 +44,9 @@ const App = () => {
             <button
               className="p-2"
               onClick={() => setGrinderVisible(!isGrinderVisible)}
+              aria-label={
+                isGrinderVisible ? 'Collapse Grinder Data' : 'Expand Grinder Data'
+              }
             >
               {isGrinderVisible ? (
                 <ChevronUp className="w-8" />
